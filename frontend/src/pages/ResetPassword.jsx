@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function ResetPassword() {
   const { token } = useParams();
@@ -12,10 +12,11 @@ function ResetPassword() {
     try {
       const res = await axios.post(
         `https://password-reset-4.onrender.com/api/auth/reset-password/${token}`,
-        { password }
+        { password },
       );
 
       alert(res.data.message);
+      window.location.href = "/";
     } catch (err) {
       alert(err.response?.data?.message || "Error");
     }
@@ -38,8 +39,8 @@ function ResetPassword() {
         <button className="btn btn-success">Reset Password</button>
 
         <p className="mt-3">
-        Login <Link to="/">Login</Link>
-      </p>
+          Go back to <Link to="/">Login</Link>
+        </p>
       </form>
     </div>
   );
