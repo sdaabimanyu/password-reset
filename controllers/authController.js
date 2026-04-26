@@ -4,6 +4,28 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 
+async function login(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    res.json({ message: "Login successful" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 async function register(req, res) {
   try {
     const { email, password } = req.body;
@@ -49,7 +71,7 @@ async function forgotPassword(req, res) {
 
     await user.save();
 
-    const link = `http://localhost:5173/reset-password/${token}`;
+    const link = `https://password-resetsda.netlify.app/reset-password/${token}`;
     console.log("Reset Link:", link);
     await sendEmail(email, link);
 
@@ -94,7 +116,8 @@ async function resetPassword(req, res) {
 }
 
 module.exports = {
+  login,
+  register,
   forgotPassword,
   resetPassword,
-  register,
 };
