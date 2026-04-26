@@ -7,7 +7,7 @@ A full-stack web application that implements a secure **password reset flow usin
 ## 🚀 Live Demo
 
 * 🌐 **Frontend (Netlify):** https://password-resetsda.netlify.app
-* 🔗 **Backend (Render):** https://your-backend-url.onrender.com
+* 🔗 **Backend (Render):** https://password-reset-4.onrender.com
 
 ---
 
@@ -130,7 +130,7 @@ EMAIL_PASSWORD=your_app_password
 ### 1️⃣ Clone the repository
 
 ```
-git clone https://github.com/your-username/password-reset.git
+git clone https://github.com/sdaabimanyu/password-reset.git
 ```
 
 ### 2️⃣ Install backend dependencies
