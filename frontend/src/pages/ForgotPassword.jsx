@@ -9,7 +9,7 @@ function ForgotPassword() {
 
     try {
       const res = await axios.post(
-        "https://password-resetsda.netlify.app/api/auth/forgot-password",
+        "https://password-reset-4.onrender.com/api/auth/forgot-password",
         { email }
       );
 
