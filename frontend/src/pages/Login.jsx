@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,10 +10,13 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://password-reset-4.onrender.com/api/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://password-reset-4.onrender.com/api/auth/login",
+        {
+          email,
+          password,
+        },
+      );
 
       alert(res.data.message);
     } catch (err) {
@@ -42,7 +44,10 @@ export default function Login() {
           required
         />
 
-        <button className="btn btn-success">Login</button>
+        <div className="flex items-center gap-x-5  mt-3">
+          <button className="btn btn-success">Login</button>
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </div>
       </form>
 
       <p className="mt-3">

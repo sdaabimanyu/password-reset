@@ -36,6 +36,10 @@ function ResetPassword() {
         />
 
         <button className="btn btn-success">Reset Password</button>
+
+        <p className="mt-3">
+        Login <Link to="/">Login</Link>
+      </p>
       </form>
     </div>
   );
