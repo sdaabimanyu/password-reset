@@ -10,12 +10,19 @@ function ForgotPassword() {
     try {
       const res = await axios.post(
         "https://password-reset-4.onrender.com/api/auth/forgot-password",
-        { email }
+        { email },
+        { timeout: 10000 }, // 10 seconds
       );
 
       alert(res.data.message);
     } catch (err) {
-      alert(err.response?.data?.message || "Error");
+      console.log(err);
+
+      if (err.code === "ERR_NETWORK") {
+        alert("Backend is not reachable (Render sleeping or down)");
+      } else {
+        alert(err.response?.data?.message || "Error");
+      }
     }
   };
 
