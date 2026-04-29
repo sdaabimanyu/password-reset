@@ -57,7 +57,6 @@ async function register(req, res) {
 async function forgotPassword(req, res) {
   try {
     const { email } = req.body;
-
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -73,19 +72,17 @@ async function forgotPassword(req, res) {
 
     const link = `https://password-resetsda.netlify.app/reset-password/${token}`;
 
-    // ✅ SEND RESPONSE FIRST (no timeout)
+    // ✅ SEND RESPONSE FIRST
     res.json({ message: "Reset link generated" });
 
-    // ✅ EMAIL IN BACKGROUND (safe)
-    res.json({ message: "Reset link generated" });
+    // ✅ SEND EMAIL IN BACKGROUND
+    setTimeout(() => {
+      sendEmail(email, link).catch(err => {
+        console.log("Email error:", err.response?.body || err.message);
+      });
+    }, 0);
 
-    try {
-      await sendEmail(email, link);
-    } catch (err) {
-      console.log("Email failed:", err.message);
-    }
   } catch (error) {
-    console.log("FULL ERROR:", error);
     res.status(500).json({ message: error.message });
   }
 }
