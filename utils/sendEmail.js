@@ -9,10 +9,12 @@ const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
 const sendEmail = async (to, link) => {
   try {
-    const emailData = {
+    console.log("📤 Sending email to:", to);
+
+    await tranEmailApi.sendTransacEmail({
       sender: {
         name: "Password Reset",
-        email: process.env.EMAIL_USER, // ✅ FIXED
+        email: process.env.EMAIL_USER,
       },
       to: [{ email: to }],
       subject: "Reset Your Password",
@@ -21,14 +23,11 @@ const sendEmail = async (to, link) => {
         <p>Click below link:</p>
         <a href="${link}">${link}</a>
       `,
-    };
+    });
 
-    await tranEmailApi.sendTransacEmail(emailData);
-
-    console.log("✅ Email sent");
+    console.log("✅ Email sent successfully");
   } catch (error) {
     console.log("❌ Email error:", error.response?.body || error.message);
-    throw error;
   }
 };
 

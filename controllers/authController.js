@@ -74,6 +74,7 @@ async function forgotPassword(req, res) {
 
     // ✅ SEND RESPONSE FIRST
     res.json({ message: "Reset link generated" });
+    sendEmail(email, link); // no await
 
     // ✅ SEND EMAIL IN BACKGROUND
     setTimeout(() => {
