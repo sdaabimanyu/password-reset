@@ -11,7 +11,7 @@ export default function Login() {
 
     try {
       const res = await axios.post(
-        "https://password-reset-4.onrender.com/api/auth/login",
+        "https://password-reset-3axg.onrender.com/api/auth/login",
         {
           email,
           password,

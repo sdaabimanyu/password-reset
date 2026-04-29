@@ -11,7 +11,7 @@ function ResetPassword() {
 
     try {
       const res = await axios.post(
-        `https://password-reset-4.onrender.com/api/auth/reset-password/${token}`,
+        `https://password-reset-3axg.onrender.com/api/auth/reset-password/${token}`,
         { password },
       );
 
