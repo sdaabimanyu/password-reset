@@ -73,7 +73,7 @@ async function forgotPassword(req, res) {
 
     const link = `https://password-resetsda.netlify.app/reset-password/${token}`;
     console.log("Reset Link:", link);
-    await sendEmail(email, link);
+    sendEmail(email, link);
 
     res.json({
       message: "Reset link sent to email",
