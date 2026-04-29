@@ -77,10 +77,12 @@ async function forgotPassword(req, res) {
     res.json({ message: "Reset link generated" });
 
     // ✅ EMAIL IN BACKGROUND (safe)
+    res.json({ message: "Reset link generated" });
+
     try {
       await sendEmail(email, link);
     } catch (err) {
-      console.log("Email failed:", err.response?.data || err.message);
+      console.log("Email failed:", err.message);
     }
   } catch (error) {
     console.log("FULL ERROR:", error);
