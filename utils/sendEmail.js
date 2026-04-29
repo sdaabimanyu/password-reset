@@ -19,7 +19,7 @@ const sendEmail = async (to, link) => {
     });
 
     console.log("Email sent");
-    console.log("Sending email to:", to);
+    console.log("EMAIL_USER:", process.env.EMAIL_USER);
     console.log("API KEY:", process.env.BREVO_API_KEY ? "OK" : "MISSING");
   } catch (err) {
     console.log("Email error:", err.response?.body || err.message);

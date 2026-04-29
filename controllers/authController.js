@@ -73,17 +73,17 @@ async function forgotPassword(req, res) {
 
     const link = `https://password-resetsda.netlify.app/reset-password/${token}`;
 
-    // ✅ SEND RESPONSE FIRST
-    res.json({ message: "Reset link sent" });
+    // ✅ SEND RESPONSE FIRST (no timeout)
+    res.json({ message: "Reset link generated" });
 
-    // ✅ SAFE EMAIL CALL
+    // ✅ EMAIL IN BACKGROUND (safe)
     try {
       await sendEmail(email, link);
     } catch (err) {
-      console.log("Email failed:", err.message);
+      console.log("Email failed:", err.response?.data || err.message);
     }
   } catch (error) {
-    console.log("FULL ERROR:", error); // 👈 IMPORTANT
+    console.log("FULL ERROR:", error);
     res.status(500).json({ message: error.message });
   }
 }
