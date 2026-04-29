@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/User");
 
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
@@ -57,12 +57,11 @@ async function register(req, res) {
 async function forgotPassword(req, res) {
   try {
     const { email } = req.body;
+
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({
-        message: "User Not Found",
-      });
+      return res.status(404).json({ message: "User Not Found" });
     }
 
     const token = crypto.randomBytes(32).toString("hex");
@@ -73,16 +72,18 @@ async function forgotPassword(req, res) {
     await user.save();
 
     const link = `https://password-resetsda.netlify.app/reset-password/${token}`;
-    console.log("Reset Link:", link);
 
-    // ✅ FIRST send response
-    res.json({
-      message: "Reset link sent to email",
-    });
+    // ✅ SEND RESPONSE FIRST
+    res.json({ message: "Reset link sent" });
 
-    // ✅ THEN send email (background)
-    sendEmail(email, link).catch((err) => console.log(err));
+    // ✅ SAFE EMAIL CALL
+    try {
+      await sendEmail(email, link);
+    } catch (err) {
+      console.log("Email failed:", err.message);
+    }
   } catch (error) {
+    console.log("FULL ERROR:", error); // 👈 IMPORTANT
     res.status(500).json({ message: error.message });
   }
 }
