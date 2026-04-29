@@ -1,31 +1,37 @@
-const axios = require("axios");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
+
+const client = SibApiV3Sdk.ApiClient.instance;
+
+const apiKey = client.authentications["api-key"];
+apiKey.apiKey = process.env.BREVO_API_KEY;
+
+const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
 const sendEmail = async (to, link) => {
   try {
-    await axios.post(
-      "https://api.brevo.com/v3/smtp/email",
-      {
-        sender: {
-          name: "Password Reset",
-          email: process.env.EMAIL_USER,
-        },
-        to: [{ email: to }],
-        subject: "Reset Your Password",
-        htmlContent: `
-          <h3>Password Reset</h3>
-          <p>Click below link to reset your password:</p>
-          <a href="${link}">${link}</a>
-        `,
+    const emailData = {
+      sender: {
+        name: "Password Reset",
+        email: process.env.EMAIL_USER,
       },
-      {
-        headers: {
-          "api-key": process.env.BREVO_API_KEY,
-          "Content-Type": "application/json",
+      to: [
+        {
+          email: to,
         },
-      }
-    );
+      ],
+      subject: "Reset Your Password",
+      htmlContent: `
+        <h3>Password Reset</h3>
+        <p>Click below link:</p>
+        <a href="${link}">${link}</a>
+      `,
+    };
+
+    await tranEmailApi.sendTransacEmail(emailData);
+
+    console.log("✅ Email sent successfully via Brevo");
   } catch (error) {
-    console.log(error.response?.data || error.message);
+    console.log("❌ Email Error:", error.response?.body || error.message);
   }
 };
 
