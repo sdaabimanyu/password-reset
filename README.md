@@ -7,7 +7,7 @@ A full-stack web application that implements a secure **password reset flow usin
 ## 🚀 Live Demo
 
 * 🌐 **Frontend (Netlify):** https://password-resetsda.netlify.app
-* 🔗 **Backend (Render):** https://password-reset-4.onrender.com
+* 🔗 **Backend (Render):** https://password-reset-3axg.onrender.com
 
 ---
 
@@ -26,7 +26,7 @@ A full-stack web application that implements a secure **password reset flow usin
 * Express.js
 * MongoDB (Atlas)
 * Mongoose
-* Nodemailer
+* Brevo (Email API)
 * Bcrypt
 * Crypto
 
@@ -35,9 +35,10 @@ A full-stack web application that implements a secure **password reset flow usin
 ## 📌 Features
 
 * ✅ User registration
+* ✅ Login functionality
 * ✅ Forgot password functionality
 * ✅ Secure token generation using crypto
-* ✅ Email-based password reset link
+* ✅ Email-based password reset link (via Brevo)
 * ✅ Token stored in database
 * ✅ Token expiry handling (1 hour)
 * ✅ Password hashing using bcrypt
@@ -55,7 +56,7 @@ A full-stack web application that implements a secure **password reset flow usin
 
    * Generate secure random token
    * Save token + expiry in DB
-   * Send email with reset link
+   * Send email with reset link (Brevo API)
 4. User clicks link from email
 5. Frontend opens reset password page
 6. Backend verifies:
@@ -74,39 +75,30 @@ A full-stack web application that implements a secure **password reset flow usin
 
 ```
 backend/
-│
 ├── config/
 │   └── db.js
-│
 ├── controllers/
 │   └── authController.js
-│
 ├── models/
 │   └── User.js
-│
 ├── routes/
 │   └── authRoutes.js
-│
 ├── utils/
 │   └── sendEmail.js
-│
 ├── index.js
-└── .env
+└── .env (local only, not pushed)
 ```
 
 ### Frontend
 
 ```
 frontend/
-│
 ├── src/
 │   ├── pages/
 │   │   ├── ForgotPassword.jsx
 │   │   └── ResetPassword.jsx
-│   │
 │   ├── App.jsx
 │   └── main.jsx
-│
 └── index.html
 ```
 
@@ -114,14 +106,19 @@ frontend/
 
 ## ⚙️ Environment Variables
 
-Create a `.env` file in backend:
+### Backend (.env for local development)
 
 ```
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-EMAIL=your_email@gmail.com
-EMAIL_PASSWORD=your_app_password
+BREVO_API_KEY=your_brevo_api_key
+EMAIL_USER=your_verified_email@gmail.com
 ```
+
+⚠️ Note:
+
+* `.env` is used only for local development
+* In production (Render), environment variables must be added in the dashboard
 
 ---
 
@@ -184,7 +181,7 @@ npm run dev
 * Password hashing using bcrypt
 * Secure token generation using crypto
 * Token expiration (1 hour)
-* Sensitive data stored in environment variables
+* Environment-based secret management
 * CORS configuration for restricted access
 
 ---
@@ -200,11 +197,7 @@ npm run dev
 
 ## 📸 Screenshots
 
-* Forgot Password Page
-* Reset Password Page
-* Email with Reset Link
-
-*(You can add screenshots here if needed)*
+(Optional: Add UI screenshots here)
 
 ---
 
@@ -213,8 +206,7 @@ npm run dev
 * Add JWT authentication
 * Add password strength validation
 * Add rate limiting
-* Use email templates
-* Add loading indicators
+* Improve UI/UX (loading states, notifications)
 
 ---
 
@@ -227,5 +219,3 @@ npm run dev
 ## 📜 License
 
 This project is for educational purposes.
-
----
