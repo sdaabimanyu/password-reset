@@ -64,6 +64,7 @@ async function forgotPassword(req, res) {
         message: "User Not Found",
       });
     }
+
     const token = crypto.randomBytes(32).toString("hex");
 
     user.resetToken = token;
@@ -73,11 +74,14 @@ async function forgotPassword(req, res) {
 
     const link = `https://password-resetsda.netlify.app/reset-password/${token}`;
     console.log("Reset Link:", link);
-    sendEmail(email, link);
 
+    // ✅ FIRST send response
     res.json({
       message: "Reset link sent to email",
     });
+
+    // ✅ THEN send email (background)
+    sendEmail(email, link).catch((err) => console.log(err));
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -120,5 +124,4 @@ module.exports = {
   resetPassword,
   register,
   login,
-  
 };
